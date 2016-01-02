@@ -18,9 +18,10 @@ pg_hba_conf:
       # fixme: Add loop for all openstack hosts
     - contents: |
         local   all             postgres                                peer
-        local   all             all                                     peer
+        local   all             all                                     md5
         host    all             all             127.0.0.1/32            md5
         host    all             all             ::1/128                 md5
+        host    all             all             10.0.0.0/8              md5
     - require: 
 {% for pkg in postgresql['packages'] %}
       - pkg: postgresql_{{ pkg }}_install
