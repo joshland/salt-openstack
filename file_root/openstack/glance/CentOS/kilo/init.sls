@@ -19,7 +19,7 @@ glance_api_conf:
     - name: "{{ glance['conf']['api'] }}"
     - sections: 
         database: 
-          connection: "mysql://{{ glance['database']['username'] }}:{{ glance['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ glance['database']['db_name'] }}"
+          connection: "{{ db_engine }}://{{ glance['database']['username'] }}:{{ glance['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ glance['database']['db_name'] }}"
         keystone_authtoken: 
           auth_uri: "http://{{ openstack_parameters['controller_ip'] }}:5000"
           auth_url: "http://{{ openstack_parameters['controller_ip'] }}:35357"
@@ -58,7 +58,7 @@ glance_registry_conf:
     - name: "{{ glance['conf']['registry'] }}"
     - sections:
         database:
-          connection: "mysql://{{ glance['database']['username'] }}:{{ glance['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ glance['database']['db_name'] }}"
+          connection: "{{ db_engine }}://{{ glance['database']['username'] }}:{{ glance['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ glance['database']['db_name'] }}"
         keystone_authtoken: 
           auth_uri: "http://{{ openstack_parameters['controller_ip'] }}:5000"
           auth_url: "http://{{ openstack_parameters['controller_ip'] }}:35357"

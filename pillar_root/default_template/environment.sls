@@ -2,7 +2,7 @@ environment_name: "<environment_name>"
 
 openstack_series: "<icehouse/juno/kilo>"
 
-db_engine: "mysql"
+db_engine: "<mysql/postgresql>"
 
 message_queue_engine: "rabbitmq"
 

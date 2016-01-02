@@ -2,7 +2,7 @@ environment_name: "ubuntu_openstack"
 
 openstack_series: "kilo"
 
-db_engine: "mysql"
+db_engine: "<mysql/postgresql>"
 
 message_queue_engine: "rabbitmq"
 

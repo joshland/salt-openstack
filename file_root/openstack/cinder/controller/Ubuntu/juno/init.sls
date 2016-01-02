@@ -27,7 +27,7 @@ cinder_controller_conf:
           debug: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
           verbose: "{{ salt['openstack_utils.boolean_value'](openstack_parameters['debug_mode']) }}"
         database:
-          connection: "mysql://{{ cinder['database']['username'] }}:{{ cinder['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ cinder['database']['db_name'] }}"
+          connection: "{{ db_engine }}://{{ cinder['database']['username'] }}:{{ cinder['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ cinder['database']['db_name'] }}"
         keystone_authtoken: 
           auth_uri: "http://{{ openstack_parameters['controller_ip'] }}:5000/v2.0"
           identity_uri: "http://{{ openstack_parameters['controller_ip'] }}:35357"
