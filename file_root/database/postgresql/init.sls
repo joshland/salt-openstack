@@ -16,7 +16,6 @@ pg_hba_conf:
     - mode: 644
     - name: {{ postgresql['conf']['hba'] }}
     - contents: |
-        [postgresqld]
         local   all             postgres                                peer
         local   all             all                                     peer
         host    all             all             127.0.0.1/32            md5
@@ -85,28 +84,28 @@ postgresql_secure_installation_script:
     - name: "/tmp/postgresql-secure-installation.sh"
     - contents: |
         #!/bin/bash
-        postgresql -u root -p"{{ postgresql['root_password'] }}" -e "" &> /dev/null
-        if [ $? -eq 0 ]; then
-            echo "MySQL root password was already set."
-        else
-            postgresql -u root -e "" &> /dev/null
-            if [ $? -eq 0 ]; then
-                postgresqladmin -u root password "{{ postgresql['root_password'] }}"
-                echo "MySQL root password has been successfully set."
-            else
-                echo "ERROR: Cannot change MySQL root password." >&2
-                exit 1
-            fi
-        fi
-        postgresql -u root -p"{{ postgresql['root_password'] }}" -e "UPDATE postgresql.user SET Password=PASSWORD('{{ postgresql['root_password'] }}') WHERE User='root';"
-        postgresql -u root -p"{{ postgresql['root_password'] }}" -e "DELETE FROM postgresql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
-        postgresql -u root -p"{{ postgresql['root_password'] }}" -e "DELETE FROM postgresql.user WHERE User='';"
-        postgresql -u root -p"{{ postgresql['root_password'] }}" -e "use test;" &> /dev/null
-        if [ $? -eq 0 ]; then
-            postgresql -u root -p"{{ postgresql['root_password'] }}" -e "DROP DATABASE test;"
-        fi
-        postgresql -u root -p"{{ postgresql['root_password'] }}" -e "FLUSH PRIVILEGES;"
-        echo "Finished MySQL secure installation."
+        #postgresql -u root -p"{{ postgresql['root_password'] }}" -e "" &> /dev/null
+        #if [ $? -eq 0 ]; then
+        #    echo "MySQL root password was already set."
+        #else
+        #    postgresql -u root -e "" &> /dev/null
+        #    if [ $? -eq 0 ]; then
+        #        postgresqladmin -u root password "{{ postgresql['root_password'] }}"
+        #        echo "MySQL root password has been successfully set."
+        #    else
+        #        echo "ERROR: Cannot change MySQL root password." >&2
+        #        exit 1
+        #    fi
+        #fi
+        #postgresql -u root -p"{{ postgresql['root_password'] }}" -e "UPDATE postgresql.user SET Password=PASSWORD('{{ postgresql['root_password'] }}') WHERE User='root';"
+        #postgresql -u root -p"{{ postgresql['root_password'] }}" -e "DELETE FROM postgresql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+        #postgresql -u root -p"{{ postgresql['root_password'] }}" -e "DELETE FROM postgresql.user WHERE User='';"
+        #postgresql -u root -p"{{ postgresql['root_password'] }}" -e "use test;" &> /dev/null
+        #if [ $? -eq 0 ]; then
+        #    postgresql -u root -p"{{ postgresql['root_password'] }}" -e "DROP DATABASE test;"
+        #fi
+        #postgresql -u root -p"{{ postgresql['root_password'] }}" -e "FLUSH PRIVILEGES;"
+        #echo "Finished MySQL secure installation."
         exit 0
     - require:
       - service: postgresql_service_running
