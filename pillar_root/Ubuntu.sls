@@ -43,14 +43,13 @@ resources:
       postgresql: "/etc/postgresql/9.3/main/pg_hba.conf"
     packages:
       - "postgresql-9.3"
-      - "postgresql-plpython3-9.3"
       - "postgresql-client-9.3"
       - "postgresql-common"
-      - "python3-postgresql"
       - "python-psycopg2"
       - "python3-psycopg2"
+      - "python3-postgresql"
     services:
-      postgresql: "postgresql-9.3"
+      postgresql: "postgresql"
 
 
   rabbitmq:
