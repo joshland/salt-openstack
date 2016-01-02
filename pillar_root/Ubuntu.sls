@@ -316,35 +316,6 @@ resources:
               nova: "nova-compute"
         files:
           sqlite: "/var/lib/nova/nova.sqlite"
-      liberty:
-        conf:
-          nova: "/etc/nova/nova.conf"
-          nova_compute: "/etc/nova/nova-compute.conf"
-        packages:
-          controller:
-            - "nova-api"
-            - "nova-cert"
-            - "nova-conductor"
-            - "nova-consoleauth"
-            - "nova-novncproxy"
-            - "nova-scheduler"
-            - "python-novaclient"
-          compute:
-            kvm:
-              - "nova-compute-kvm"
-        services:
-          controller:
-            api: "nova-api"
-            cert: "nova-cert"
-            consoleauth: "nova-consoleauth"
-            scheduler: "nova-scheduler"
-            conductor: "nova-conductor"
-            novncproxy: "nova-novncproxy"
-          compute:
-            kvm:
-              nova: "nova-compute"
-        files:
-          sqlite: "/var/lib/nova/nova.sqlite"
 
   neutron:
     dirs:
