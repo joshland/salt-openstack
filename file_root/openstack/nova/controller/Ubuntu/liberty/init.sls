@@ -20,7 +20,7 @@ nova_controller_conf:
     - name: "{{ nova['conf']['nova'] }}"
     - sections:
         database:
-          connection: "{{ db_engine }}://{{ nova['database']['username'] }}:{{ nova['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ nova['database']['db_name'] }}"
+          connection: "{{ openstack_parameters['database'] }}://{{ nova['database']['username'] }}:{{ nova['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ nova['database']['db_name'] }}"
         DEFAULT:
           auth_strategy: "keystone"
           my_ip: "{{ openstack_parameters['controller_ip'] }}"

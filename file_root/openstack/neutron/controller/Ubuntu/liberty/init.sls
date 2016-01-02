@@ -19,7 +19,7 @@ neutron_controller_conf:
     - name: "{{ neutron['conf']['neutron'] }}"
     - sections: 
         database: 
-          connection: "{{ db_engine }}://{{ neutron['database']['username'] }}:{{ neutron['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ neutron['database']['db_name'] }}"
+          connection: "{{ openstack_parameters['database'] }}://{{ neutron['database']['username'] }}:{{ neutron['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ neutron['database']['db_name'] }}"
         DEFAULT: 
           auth_strategy: keystone
           core_plugin: ml2

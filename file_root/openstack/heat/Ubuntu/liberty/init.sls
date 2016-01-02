@@ -10,7 +10,7 @@ heat_conf:
     - name: "{{ heat['conf']['heat'] }}"
     - sections:
         database:
-          connection: "{{ db_engine }}://{{ heat['database']['username'] }}:{{ heat['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ heat['database']['db_name'] }}"
+          connection: "{{ openstack_parameters['database'] }}://{{ heat['database']['username'] }}:{{ heat['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ heat['database']['db_name'] }}"
         DEFAULT:
           heat_metadata_server_url: "http://{{ openstack_parameters['controller_ip'] }}:8000"
           heat_waitcondition_server_url: "http://{{ openstack_parameters['controller_ip'] }}:8000/v1/waitcondition"

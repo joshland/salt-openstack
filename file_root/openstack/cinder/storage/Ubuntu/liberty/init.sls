@@ -19,7 +19,7 @@ cinder_storage_conf:
     - name: "{{ cinder['conf']['cinder'] }}"
     - sections:
         database:
-          connection: "{{ db_engine }}://{{ cinder['database']['username'] }}:{{ cinder['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ cinder['database']['db_name'] }}"
+          connection: "{{ openstack_parameters['database'] }}://{{ cinder['database']['username'] }}:{{ cinder['database']['password'] }}@{{ openstack_parameters['controller_ip'] }}/{{ cinder['database']['db_name'] }}"
         DEFAULT:
           my_ip: "{{ salt['openstack_utils.minion_ip'](grains['id']) }}"
           glance_host: "{{ openstack_parameters['controller_ip'] }}"
