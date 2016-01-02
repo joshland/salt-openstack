@@ -40,7 +40,7 @@ resources:
       - "/etc/postgresql/9.3/main"
     conf:
       hba: "/etc/postgresql/9.3/main/pg_hba.conf"
-      postgresql: "/etc/postgresql/9.3/main/pg_hba.conf"
+      postgresql: "/etc/postgresql/9.3/main/postgresql.conf"
     packages:
       - "postgresql-9.3"
       - "postgresql-client-9.3"
@@ -108,6 +108,17 @@ resources:
         files:
           sqlite: "/var/lib/keystone/keystone.db"
           log_dir: "/var/log/keystone"
+      liberty:
+        conf:
+          keystone: "/etc/keystone/keystone.conf"
+        packages:
+          - "keystone"
+          - "python-psycopg2"
+        services:
+          keystone: "keystone"
+        files:
+          sqlite: "/var/lib/keystone/keystone.db"
+          log_dir: "/var/log/keystone"
 
   glance:
     dirs:
@@ -141,6 +152,18 @@ resources:
           images_dir: "/var/lib/glance/images"
           sqlite: "/var/lib/glance/glance.sqlite"
       icehouse:
+        conf:
+          api: "/etc/glance/glance-api.conf"
+          registry: "/etc/glance/glance-registry.conf"
+        packages:
+          - "glance"
+          - "python-glanceclient"
+        services:
+          api: "glance-api"
+          registry: "glance-registry"
+        files:
+          sqlite: "/var/lib/glance/glance.sqlite"
+      liberty:
         conf:
           api: "/etc/glance/glance-api.conf"
           registry: "/etc/glance/glance-registry.conf"
@@ -222,6 +245,35 @@ resources:
         files:
           sqlite: "/var/lib/nova/nova.sqlite"
       icehouse:
+        conf:
+          nova: "/etc/nova/nova.conf"
+          nova_compute: "/etc/nova/nova-compute.conf"
+        packages:
+          controller:
+            - "nova-api"
+            - "nova-cert"
+            - "nova-conductor"
+            - "nova-consoleauth"
+            - "nova-novncproxy"
+            - "nova-scheduler"
+            - "python-novaclient"
+          compute:
+            kvm:
+              - "nova-compute-kvm"
+        services:
+          controller:
+            api: "nova-api"
+            cert: "nova-cert"
+            consoleauth: "nova-consoleauth"
+            scheduler: "nova-scheduler"
+            conductor: "nova-conductor"
+            novncproxy: "nova-novncproxy"
+          compute:
+            kvm:
+              nova: "nova-compute"
+        files:
+          sqlite: "/var/lib/nova/nova.sqlite"
+      liberty:
         conf:
           nova: "/etc/nova/nova.conf"
           nova_compute: "/etc/nova/nova-compute.conf"
@@ -377,6 +429,47 @@ resources:
             metadata_agent: "neutron-metadata-agent"
             ovs: "openvswitch-switch"
             ovs_agent: "neutron-plugin-openvswitch-agent"
+      liberty:
+        conf:
+          neutron: "/etc/neutron/neutron.conf"
+          sysctl: "/etc/sysctl.conf"
+          ml2: "/etc/neutron/plugins/ml2/ml2_conf.ini"
+          l3_agent: "/etc/neutron/l3_agent.ini"
+          dhcp_agent: "/etc/neutron/dhcp_agent.ini"
+          dnsmasq_config_file: "/etc/neutron/dnsmasq-neutron.conf"
+          metadata_agent: "/etc/neutron/metadata_agent.ini"
+        packages:
+          controller:
+            - "neutron-server"
+            - "neutron-plugin-ml2"
+          compute:
+            kvm:
+              - "neutron-common"
+              - "neutron-plugin-ml2"
+              - "neutron-plugin-openvswitch-agent"
+              - "openvswitch-datapath-dkms"
+              - "python-mysqldb"
+          network:
+            - "neutron-plugin-ml2"
+            - "neutron-plugin-openvswitch-agent"
+            - "openvswitch-datapath-dkms"
+            - "neutron-l3-agent"
+            - "neutron-dhcp-agent"
+            - "openvswitch-switch"
+            - "neutron-metadata-agent"
+        services:
+          controller:
+            neutron_server: "neutron-server"
+          compute:
+            kvm:
+              ovs: "openvswitch-switch"
+              ovs_agent: "neutron-plugin-openvswitch-agent"
+          network:
+            l3_agent: "neutron-l3-agent"
+            dhcp_agent: "neutron-dhcp-agent"
+            metadata_agent: "neutron-metadata-agent"
+            ovs: "openvswitch-switch"
+            ovs_agent: "neutron-plugin-openvswitch-agent"
 
   openvswitch:
     conf:
@@ -469,6 +562,26 @@ resources:
             cinder_volume: "cinder-volume"
         files:
           sqlite: "/var/lib/cinder/cinder.sqlite"
+      liberty:
+        conf:
+          cinder: "/etc/cinder/cinder.conf"
+          losetup_upstart: "/etc/init/openstack-cinder-losetup.conf"
+        packages:
+          controller:
+            - "cinder-api"
+            - "cinder-scheduler"
+          storage:
+            - "cinder-volume"
+            - "python-psycopg2"
+        services:
+          controller:
+            scheduler: "cinder-scheduler"
+            api: "cinder-api"
+          storage:
+            tgt: "tgt"
+            cinder_volume: "cinder-volume"
+        files:
+          sqlite: "/var/lib/cinder/cinder.sqlite"
 
   heat:
     dirs:
@@ -504,6 +617,20 @@ resources:
         files:
           sqlite: "/var/lib/heat/heat.sqlite"
       icehouse:
+        conf:
+          heat: "/etc/heat/heat.conf"
+        packages:
+          - "heat-api"
+          - "heat-api-cfn"
+          - "heat-engine"
+        services:
+          api: "heat-api"
+          api_cfn: "heat-api-cfn"
+          engine: "heat-engine"
+        files:
+          sqlite: "/var/lib/heat/heat.sqlite"
+          log_dir: "/var/log/heat"
+      liberty:
         conf:
           heat: "/etc/heat/heat.conf"
         packages:
