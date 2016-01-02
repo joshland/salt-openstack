@@ -40,6 +40,7 @@ resources:
       - "/etc/postgresql/9.3/main"
     conf:
       hba: "/etc/postgresql/9.3/main/pg_hba.conf"
+      ident: "/etc/postgresql/9.3/main/pg_ident.conf"
       postgresql: "/etc/postgresql/9.3/main/postgresql.conf"
     packages:
       - "postgresql-9.3"

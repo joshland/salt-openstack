@@ -27,6 +27,22 @@ pg_hba_conf:
       - pkg: postgresql_{{ pkg }}_install
 {% endfor %}
 
+pg_ident_conf:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 644
+    - name: {{ postgresql['conf']['ident'] }}
+      # fixme: Add loop for all openstack hosts
+    - contents: |
+        # MAPNAME       SYSTEM-USERNAME PG-USERNAME
+        root_as_others  root            postgres
+    - require: 
+{% for pkg in postgresql['packages'] %}
+      - pkg: postgresql_{{ pkg }}_install
+{% endfor %}
+
+
 postgresql_conf:
   file.managed:
     - user: root
