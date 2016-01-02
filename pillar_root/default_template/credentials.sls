@@ -1,6 +1,9 @@
 mysql:
   root_password: "<password_value>"
 
+postgresql:
+  root_password: "<password_value>"
+
 rabbitmq:
   user_name: "openstack"
   user_password: "<password_value>"

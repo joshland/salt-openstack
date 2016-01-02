@@ -521,6 +521,15 @@ def mysql():
     return context
 
 
+def postgresql():
+    context = __salt__['pillar.get']('resources:postgresql')
+    context.update({
+        'root_password': __salt__['pillar.get']('postgresql:root_password'),
+        'databases': __salt__['pillar.get']('databases', default=[])
+    })
+    return context
+
+
 def rabbitmq():
     context = __salt__['pillar.get']('resources:rabbitmq')
     context.update({

@@ -11,6 +11,7 @@ resources:
         series:
           juno: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/juno main"
           kilo: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main"
+          liberty: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/liberty main"
 
   ntp:
     packages:
@@ -32,6 +33,25 @@ resources:
       - "python-mysqldb"
     services:
       mysql: "mysql"
+
+  postgresql:
+    dirs:
+      - "/var/lib/postgresql/9.3/main/"
+      - "/etc/postgresql/9.3/main"
+    conf:
+      hba: "/etc/postgresql/9.3/main/pg_hba.conf"
+      postgresql: "/etc/postgresql/9.3/main/pg_hba.conf"
+    packages:
+      - "postgresql-9.3"
+      - "postgresql-plpython3-9.3"
+      - "postgresql-client-9.3"
+      - "postgresql-common"
+      - "python3-postgresql"
+      - "python-psycopg2"
+      - "python3-psycopg2"
+    services:
+      postgresql: "postgresql-9.3"
+
 
   rabbitmq:
     dirs:
