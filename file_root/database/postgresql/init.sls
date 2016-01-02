@@ -15,18 +15,12 @@ pg_hba_conf:
     - group: root
     - mode: 644
     - name: {{ postgresql['conf']['hba'] }}
+      # fixme: Add loop for all openstack hosts
     - contents: |
         local   all             postgres                                peer
         local   all             all                                     peer
         host    all             all             127.0.0.1/32            md5
         host    all             all             ::1/128                 md5
-        host    
-        bind-address = {{ openstack_parameters['controller_ip'] }}
-        default-storage-engine = innodb
-        innodb_file_per_table
-        collation-server = utf8_general_ci
-        init-connect = 'SET NAMES utf8'
-        character-set-server = utf8
     - require: 
 {% for pkg in postgresql['packages'] %}
       - pkg: postgresql_{{ pkg }}_install

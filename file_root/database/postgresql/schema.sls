@@ -11,17 +11,17 @@ postgresql_{{ database }}_db:
     - connection_charset: utf8
 
 
-  {% for host in ['localhost', '%'] %}
+{% for host in ['localhost', '%'] %}
 postgresql_{{ database }}_{{ host }}_account:
   postgres_user.present:
     - db_name: {{ postgresql['databases'][database]['username'] }}
     - db_password: {{ postgresql['databases'][database]['password'] }}
     - require:
       - postgresql_database: postgresql_{{ database }}_db
-  {% endfor %}
+{% endfor %}
 
 
-  {% for host in ['localhost', '%'] %}
+{% for host in ['localhost', '%'] %}
 postgresql_{{ database }}_{{ host }}_grants:
   postgres_grants.present:
     - grant: all
