@@ -2,6 +2,7 @@ mysql:
   root_password: "<password_value>"
 
 postgresql:
+  root_user: "root"
   root_password: "<password_value>"
 
 rabbitmq:

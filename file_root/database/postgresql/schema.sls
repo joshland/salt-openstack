@@ -2,26 +2,31 @@
 
 
 {% for database in postgresql['databases'] %}
+postgresql_{{ database }}_account:
+  postgres_user.present:
+    - name:        {{ postgresql['databases'][database]['username'] }}
+    - password:    {{ postgresql['databases'][database]['password'] }}
+    ## role-related flags
+    - createdb:    false
+    - createroles: false
+    - superuser:   false
+    ## System Username/Password for access.  
+    - db_user:     {{ postgresql['root_user'] }}
+    - db_password: {{ postgresql['root_password'] }}
+
+
 postgresql_{{ database }}_db:
   postgres_database.present:
-    - name: {{ postgresql['databases'][database]['db_name'] }}
-    - character_set: 'utf8'
-    - connection_user: root
-    - connection_pass: {{ postgresql['root_password'] }}
-    - connection_charset: utf8
-
-
-{% for host in ['localhost', '%'] %}
-postgresql_{{ database }}_{{ host }}_account:
-  postgres_user.present:
-    - db_name: {{ postgresql['databases'][database]['username'] }}
-    - db_password: {{ postgresql['databases'][database]['password'] }}
+    - name:  {{ postgresql['databases'][database]['db_name'] }}
+    - owner: {{ postgresql['databases'][database]['username'] }}
+    - encoding: 'utf8'
+    ## System Username/Password for access.  
+    - db_user:     {{ postgresql['root_user'] }}
+    - db_password: {{ postgresql['root_password'] }}
     - require:
-      - postgresql_database: postgresql_{{ database }}_db
-{% endfor %}
+      - postgresql_database: postgresql_{{ database }}_account
 
 
-{% for host in ['localhost', '%'] %}
 postgresql_{{ database }}_{{ host }}_grants:
   postgres_grants.present:
     - grant: all
@@ -30,5 +35,4 @@ postgresql_{{ database }}_{{ host }}_grants:
     - db_password: {{ postgresql['databases'][database]['password'] }}
     - require:
       - postgresql_user: postgresql_{{ database }}_{{ host }}_account
-  {% endfor %}
 {% endfor %}

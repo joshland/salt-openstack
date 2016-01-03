@@ -9,8 +9,8 @@ resources:
     repositories:
       openstack:
         series:
-          juno: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/juno main"
-          kilo: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main"
+          juno:    "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/juno main"
+          kilo:    "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main"
           liberty: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/liberty main"
 
   ntp:
