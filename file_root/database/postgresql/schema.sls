@@ -34,5 +34,5 @@ postgresql_{{ database }}_grants:
     - db_user: {{ postgresql['databases'][database]['username'] }}
     - db_password: {{ postgresql['databases'][database]['password'] }}
     - require:
-      - postgresql_user: postgresql_{{ database }}_{{ host }}_account
+      - postgresql_user: postgresql_{{ database }}_account
 {% endfor %}
