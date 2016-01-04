@@ -28,7 +28,7 @@ postgresql_{{ database }}_db:
 
 
 postgresql_{{ database }}_grants:
-host  postgres_grants.present:
+  postgres_grants.present:
     - grant: all
     - name: "{{ postgresql['databases'][database]['db_name'] }}.*"
     - db_user: {{ postgresql['databases'][database]['username'] }}
