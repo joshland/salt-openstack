@@ -524,6 +524,7 @@ def mysql():
 def postgresql():
     context = __salt__['pillar.get']('resources:postgresql')
     context.update({
+        'root_user': __salt__['pillar.get']('postgresql:root_user'),
         'root_password': __salt__['pillar.get']('postgresql:root_password'),
         'databases': __salt__['pillar.get']('databases', default=[])
     })
