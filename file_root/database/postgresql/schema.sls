@@ -1,7 +1,7 @@
 {% set postgresql = salt['openstack_utils.postgresql']() %}
 
 
-postgresql_{{ database }}_account:
+postgresql_mgmt_account:
   postgres_user.present:
     - name:        {{ postgresql['root_user'] }}
     - password:    {{ postgresql['root_password'] }}
