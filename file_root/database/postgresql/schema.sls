@@ -1,6 +1,18 @@
 {% set postgresql = salt['openstack_utils.postgresql']() %}
 
 
+postgresql_{{ database }}_account:
+  postgres_user.present:
+    - name:        {{ postgresql['root_user'] }}
+    - password:    {{ postgresql['root_password'] }}
+    ## role-related flags
+    - createdb:    true
+    - createroles: true
+    - superuser:   true
+    ## System Username/Password for access.
+    - user:        "postgres"
+
+
 {% for database in postgresql['databases'] %}
 postgresql_{{ database }}_account:
   postgres_user.present:
@@ -25,14 +37,4 @@ postgresql_{{ database }}_db:
     - db_password: {{ postgresql['root_password'] }}
     - require:
       - postgresql_database: postgresql_{{ database }}_account
-
-
-postgresql_{{ database }}_grants:
-  postgres_grants.present:
-    - grant: all
-    - name: "{{ postgresql['databases'][database]['db_name'] }}.*"
-    - db_user: {{ postgresql['databases'][database]['username'] }}
-    - db_password: {{ postgresql['databases'][database]['password'] }}
-    - require:
-      - postgresql_user: postgresql_{{ database }}_account
 {% endfor %}
