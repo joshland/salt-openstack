@@ -35,6 +35,6 @@ postgresql_{{ database }}_db:
     ## System Username/Password for access.  
     - db_user:     {{ postgresql['root_user'] }}
     - db_password: {{ postgresql['root_password'] }}
-    - require:
-      - postgresql_database: postgresql_{{ database }}_account
+    #- require:
+    #  - postgresql_database: postgresql_{{ database }}_account
 {% endfor %}
